@@ -6,7 +6,7 @@ import { Context as MemberContext } from '../context/MemberContext';
 const DetailFamilyScreen =({navigation}) => {
     const { state, deleteMember } = useContext(MemberContext)
 
-    const _id = navigation.state.params._id
+    const item = navigation.state.params.item
 
     var members = _id => {
         return state.personData.filter(result => {
@@ -25,33 +25,35 @@ const DetailFamilyScreen =({navigation}) => {
             onPress: () => console.log("Cancel Pressed"),
             style: "cancel"
             },
-            { text: "Hapus", onPress: () => {deleteMember(_id, () => {navigation.navigate('Home')})} }
+            { text: "Hapus", onPress: () => {deleteMember(_id, () => {navigation.navigate('DetailMember')})} }
         ],
             { cancelable: false }
         );
     }
 
-    var detailMember = state.personData.find(p => p._id === _id);
+    var detailMember = state.personData.find(p => p._id === item._id);
+    console.log(detailMember)
 
   return (
     <View style={styles.container}>
       <Headline>Detail Member</Headline>
-      <Title>{detailMember.name}</Title>
-      <Title>{detailMember.address}</Title>
-      <Title>{detailMember.birthdate}</Title>
-      <Title>{detailMember.diedate}</Title>
-      <Button icon="plus" mode="contained" onPress={() => navigation.navigate('AddMember', {_id:_id})}>Tambah</Button>
-      <Button icon="trash-can" mode="contained" onPress={() => buttonAlert(_id)}>Hapus</Button>
+      <Title>{item.name}</Title>
+      <Title>{item.address}</Title>
+      <Title>{item.birthdate}</Title>
+      <Title>{item.diedate}</Title>
+      <Title>{item.gender}</Title>
+      <Button icon="plus" mode="contained" onPress={() => navigation.navigate('AddMember', {item})}>Tambah</Button>
+      <Button icon="trash-can" mode="contained" onPress={() => buttonAlert(item._id)}>Hapus</Button>
       <FlatList
             showsVerticalScrollIndicator={false}
-            data={members(_id)}
+            data={members(item._id)}
             keyExtractor={(member) => member._id}
             renderItem={({ item }) => {
             return (
                 <List.Item
                 title={item.name}
                 description={item._id}
-                onPress={() => navigation.push('DetailMember', { _id:item._id })}
+                onPress={() => navigation.push('DetailMember', { item })}
                 />
             );
             }}

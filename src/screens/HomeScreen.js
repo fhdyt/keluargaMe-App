@@ -22,7 +22,7 @@ const HomeScreen =({navigation}) => {
           onTouchStart={() => navigation.navigate('Search')}
           placeholder="Cari"
       />
-      <Button icon="plus" mode="contained" onPress={() => navigation.navigate('AddMember', {_id:''})}>
+      <Button icon="plus" mode="contained" color='#388e3c' onPress={() => navigation.navigate('AddMember', {_id:''})}>
         Tambah
       </Button>
       <FlatList
@@ -34,7 +34,7 @@ const HomeScreen =({navigation}) => {
           <List.Item
             title={item.name}
             description={item._id}
-            onPress={() => navigation.navigate('DetailMember', { _id:item._id })}
+            onPress={() => navigation.navigate('DetailMember', { item })}
           />
         );
         }}

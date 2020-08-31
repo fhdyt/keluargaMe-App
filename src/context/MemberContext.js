@@ -49,7 +49,7 @@ const fetchFamily = dispatch => async () => {
   }
 };
 
-const add_member = dispatch => async ({ _id, name, address, phone, birthdate, diedate }, callback) => {
+const add_member = dispatch => async ({ pid, name, address, phone, birthdate, diedate, gender }, callback) => {
   // if(tags === true){
   //   tags = 'assistant'
   // }
@@ -57,7 +57,7 @@ const add_member = dispatch => async ({ _id, name, address, phone, birthdate, di
   //   tags = ''
   // }
   try {
-    const response = await serverApi.post('/member', { pid:_id, name, address, phone, birthdate, diedate });
+    const response = await serverApi.post('/member', { pid, name, address, phone, birthdate, diedate, gender });
     dispatch({ type: 'add_member', payload: response.data});
     if(callback){
       callback()
