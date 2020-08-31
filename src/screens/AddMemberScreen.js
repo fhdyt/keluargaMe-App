@@ -4,7 +4,7 @@ import { TextInput, Button, Headline } from 'react-native-paper';
 import { Context as MemberContext } from '../context/MemberContext';
 
 const AddMemberScreen =({ navigation }) => {
-  const { state, add_member } = useContext(MemberContext);
+  const { add_member } = useContext(MemberContext);
   const _id = navigation.state.params._id
   const [name, setName] = useState('');
   const [address, setAddress] = useState('');
