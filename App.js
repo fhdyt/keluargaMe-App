@@ -1,21 +1,43 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { createAppContainer, createSwitchNavigator } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
 
-export default function App() {
+import { Provider as AuthProvider } from './src/context/AuthContext';
+import { Provider as MemberProvider } from './src/context/MemberContext';
+
+import SignInScreen from './src/screens/SignInScreen';
+import ResolveAuthScreen from './src/screens/ResolveAuthScreen';
+import HomeScreen from './src/screens/HomeScreen';
+import SearchScreen from './src/screens/SearchScreen';
+import AddMemberScreen from './src/screens/AddMemberScreen';
+import DetailMemberScreen from './src/screens/DetailMemberScreen';
+import { setNavigator } from './src/navigationRef';
+
+const switchNavigator = createSwitchNavigator({
+  ResolveAuth: ResolveAuthScreen,
+  loginFlow: createStackNavigator({
+    Signin: SignInScreen,
+  }),
+  mainFlow: createStackNavigator({
+    Home : HomeScreen,
+    Search: SearchScreen,
+    AddMember : AddMemberScreen,
+    DetailMember : DetailMemberScreen
+  })
+})
+
+const App = createAppContainer(switchNavigator);
+
+export default () => {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <MemberProvider>
+      <AuthProvider>
+        <App 
+          ref={(navigator) => {
+            setNavigator(navigator);
+          }}
+        />
+      </AuthProvider>
+    </MemberProvider>
   );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+};
