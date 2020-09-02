@@ -2,9 +2,8 @@ import React, { useState, useContext } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Context as MemberContext } from '../context/MemberContext';
 import MemberForm from '../components/MemberForm';
-const AddMemberScreen =({ navigation }) => {
-  const item = navigation.state.params.item
-  const pid = item._id;
+const AddFirstMemberScreen =() => {
+  const pid = '';
   const { add_member } = useContext(MemberContext);
 
   return (
@@ -12,7 +11,7 @@ const AddMemberScreen =({ navigation }) => {
     buttonTitle="Simpan"
     header="Tambah Anggota"
     onSubmit={(name, address, phone, birthdate, diedate, gender, tags) => {
-      add_member({pid, name, address, phone, birthdate, diedate, gender, tags}, () => navigation.navigate('DetailMember', { item:item }));
+      add_member({pid, name, address, phone, birthdate, diedate, gender, tags}, () => navigation.navigate('Home'));
     }}
     />
   );
@@ -25,4 +24,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AddMemberScreen;
+export default AddFirstMemberScreen;

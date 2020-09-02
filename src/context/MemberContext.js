@@ -49,15 +49,15 @@ const fetchFamily = dispatch => async () => {
   }
 };
 
-const add_member = dispatch => async ({ pid, name, address, phone, birthdate, diedate, gender }, callback) => {
-  // if(tags === true){
-  //   tags = 'assistant'
-  // }
-  // else{
-  //   tags = ''
-  // }
+const add_member = dispatch => async ({ pid, name, address, phone, birthdate, diedate, gender, tags }, callback) => {
+  if(tags === true){
+    tags = 'assistant'
+  }
+  else{
+    tags = ''
+  }
   try {
-    const response = await serverApi.post('/member', { pid, name, address, phone, birthdate, diedate, gender });
+    const response = await serverApi.post('/member', { pid, name, address, phone, birthdate, diedate, gender, tags });
     dispatch({ type: 'add_member', payload: response.data});
     if(callback){
       callback()
@@ -69,7 +69,7 @@ const add_member = dispatch => async ({ pid, name, address, phone, birthdate, di
   }
 };
 
-const edit_member = dispatch => async ({ _id, id, pid, name, address, contact, color, birthdate, gender, diedate, tags_status}, callback) => {
+const edit_member = dispatch => async ({ _id, pid, name, address, phone, birthdate, diedate, gender, tags_status}, callback) => {
   if(tags_status === true){
     tagss = 'assistant'
     tags_server = 'assistant'
@@ -81,9 +81,9 @@ const edit_member = dispatch => async ({ _id, id, pid, name, address, contact, c
   try {
     console.log("Edit Member")
     const tags = [tagss]
-    console.log({ _id, id, pid, name, address, contact, color, birthdate, gender, diedate, tags_status})
-    const response = await serverApi.put('/person', { _id, id, pid, name, address, contact, color, birthdate, gender, diedate, tags:tags_server });
-    dispatch({ type: 'edit_member', payload: { _id, id, pid, name, address, contact, color, birthdate, gender, diedate, tags}});
+    console.log({ _id, pid, name, address, phone, birthdate, diedate, gender, tags_status})
+    const response = await serverApi.put('/member', { _id, pid, name, address, phone, birthdate, diedate, gender, tags:tags_server });
+    dispatch({ type: 'edit_member', payload: {_id, pid, name, address, phone, birthdate, diedate, gender, tags}});
     if(callback){
       callback()
     }

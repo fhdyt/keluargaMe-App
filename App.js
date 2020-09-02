@@ -10,6 +10,8 @@ import ResolveAuthScreen from './src/screens/ResolveAuthScreen';
 import HomeScreen from './src/screens/HomeScreen';
 import SearchScreen from './src/screens/SearchScreen';
 import AddMemberScreen from './src/screens/AddMemberScreen';
+import EditMemberScreen from './src/screens/EditMemberScreen';
+import AddFirstMemberScreen from './src/screens/AddFirstMemberScreen';
 import DetailMemberScreen from './src/screens/DetailMemberScreen';
 import { setNavigator } from './src/navigationRef';
 
@@ -22,6 +24,8 @@ const switchNavigator = createSwitchNavigator({
     Home : HomeScreen,
     Search: SearchScreen,
     AddMember : AddMemberScreen,
+    EditMember : EditMemberScreen,
+    AddFirstMember : AddFirstMemberScreen,
     DetailMember : DetailMemberScreen
   })
 })

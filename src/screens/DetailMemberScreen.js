@@ -32,17 +32,17 @@ const DetailFamilyScreen =({navigation}) => {
     }
 
     var detailMember = state.personData.find(p => p._id === item._id);
-    console.log(detailMember)
 
   return (
     <View style={styles.container}>
-      <Headline>Detail Member</Headline>
       <Title>{item.name}</Title>
       <Title>{item.address}</Title>
       <Title>{item.birthdate}</Title>
       <Title>{item.diedate}</Title>
       <Title>{item.gender}</Title>
+      <Title>{item.tags}</Title>
       <Button icon="plus" mode="contained" onPress={() => navigation.navigate('AddMember', {item})}>Tambah</Button>
+      <Button icon="plus" mode="contained" onPress={() => navigation.navigate('EditMember', {item})}>Edit</Button>
       <Button icon="trash-can" mode="contained" onPress={() => buttonAlert(item._id)}>Hapus</Button>
       <FlatList
             showsVerticalScrollIndicator={false}
