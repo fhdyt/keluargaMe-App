@@ -11,12 +11,13 @@ const SignInScreen =() => {
   return (
     <View style={styles.container}>
       <TextInput
-      label="Email"
+      label="No. Handphone"
       value={phone}
       onChangeText={phone => setPhone(phone)}
     />
     <TextInput
       label="Password"
+      secureTextEntry
       value={password}
       onChangeText={password => setPassword(password)}
     />

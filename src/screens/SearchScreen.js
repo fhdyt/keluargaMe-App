@@ -10,10 +10,10 @@ const SearchScreen = ({navigation}) => {
 
     const findQuery =(key) =>{
         return state.personData.filter(result => {
-            if(!key)
-            {
-                return null
-            }
+            // if(!key)
+            // {
+            //     return null
+            // }
             return result.name.match(new RegExp(`${key}`, 'gi'));
           });
     }
@@ -27,8 +27,6 @@ const SearchScreen = ({navigation}) => {
                 placeholder="Cari"
                 onChangeText={setSearchQuery}
                 value={searchQuery}
-                icon="arrow-left"
-                onIconPress={() => navigation.navigate('Home')}
                 focus
             />
             <View>
@@ -41,7 +39,7 @@ const SearchScreen = ({navigation}) => {
                         <List.Item
                             title={item.name}
                             description={item._id}
-                            onPress={() => navigation.navigate('DetailMember', { _id:item._id })}
+                            onPress={() => navigation.navigate('DetailMember', { item })}
                         />
                     );
                     }}
