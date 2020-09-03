@@ -1,9 +1,14 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { StyleSheet, FlatList, View, Alert } from 'react-native';
-import { TextInput, Button, Headline, List, Title } from 'react-native-paper';
+import { TextInput, Button, Headline, List, IconButton, Divider } from 'react-native-paper';
 import { Context as MemberContext } from '../context/MemberContext';
+import { ScrollView } from 'react-native-gesture-handler';
+import { YellowBox } from 'react-native'
 
-const DetailFamilyScreen =({navigation}) => {
+const DetailMemberScreen =({navigation}) => {
+    YellowBox.ignoreWarnings([
+      'VirtualizedLists should never be nested',
+    ])
     const { state, deleteMember } = useContext(MemberContext)
 
     const item = navigation.state.params.item
@@ -34,39 +39,108 @@ const DetailFamilyScreen =({navigation}) => {
     var detailMember = state.personData.find(p => p._id === item._id);
 
   return (
+    <ScrollView showsVerticalScrollIndicator={false}>
     <View style={styles.container}>
-      <Title>{item.name}</Title>
-      <Title>{item.address}</Title>
-      <Title>{item.birthdate}</Title>
-      <Title>{item.diedate}</Title>
-      <Title>{item.gender}</Title>
-      <Title>{item.tags}</Title>
-      <Button icon="plus" mode="contained" onPress={() => navigation.navigate('AddMember', {item})}>Tambah</Button>
-      <Button icon="plus" mode="contained" onPress={() => navigation.navigate('EditMember', {item})}>Edit</Button>
-      <Button icon="trash-can" mode="contained" onPress={() => buttonAlert(item._id)}>Hapus</Button>
+        <View style={{borderWidth:1, 
+          borderColor:"grey", 
+          borderRadius:15,
+          padding:10,
+          marginVertical:10
+          }} >
+        <List.Item
+          title={item.name}
+          titleStyle={{fontSize:25, fontWeight:'bold'}}
+          description={item.address}
+        />
+            <Divider/>
+        <List.Item
+          title='Tanggal Lahir'
+          description={item.birthdate}
+        />
+            <Divider/>
+        <List.Item
+          title='Tanggal Meninggal'
+          description={item.diedate}
+        />
+            <Divider/>
+        <List.Item
+          title='No. Handphone'
+          description={item.phone}
+        />
+        <Button icon="account-edit" color="#283593" style={[styles.button,{marginBottom:10}]} mode="contained" onPress={() => navigation.navigate('EditMember', {item})}>Edit</Button>
+        <Button icon="trash-can" color="#d50000" style={styles.button} mode="contained" onPress={() => buttonAlert(item._id)}>Hapus</Button>
+      </View>
+      <Divider />
+      <View style={{borderWidth:1, 
+          borderColor:"grey", 
+          borderRadius:15,
+          padding:10,
+          marginTop:5
+          }} >
+            <Button color="#388e3c" icon="account-plus" style={styles.button} mode="contained" onPress={() => navigation.navigate('AddMember', {item})}>Tambah</Button>
       <FlatList
             showsVerticalScrollIndicator={false}
             data={members(item._id)}
             keyExtractor={(member) => member._id}
             renderItem={({ item }) => {
+              if(item.tags[0] == 'assistant')
+              {
+                if(item.gender === 'M')
+                {
+                  var subtitle = 'Suami'
+                }
+                else
+                {
+                  var subtitle = 'Istri'
+                }
+              }
+              else{
+                var subtitle = 'Anak';
+              }
             return (
                 <List.Item
                 title={item.name}
-                description={item._id}
+                description={subtitle}
                 onPress={() => navigation.push('DetailMember', { item })}
                 />
             );
             }}
         />
+        </View>
     </View>
+    </ScrollView>
   );
 }
+
+DetailMemberScreen.navigationOptions = ({ navigation }) => {
+  return {
+    title : '',
+    headerStyle: {
+      elevation: 0, // remove shadow on Android
+      shadowOpacity: 0, // remove shadow on iOS
+    },
+    headerRight: () => (
+      <IconButton
+        icon="home"
+        color="black"
+        size={25}
+        onPress={() => navigation.navigate('Home')}
+      />
+    ),
+      
+    }
+   
+};
 
 const styles = StyleSheet.create({
   container: {
     marginHorizontal:10,
     backgroundColor: '#fff',
+    marginBottom:5
   },
+  button: {
+    borderRadius: 30
+  }
 });
 
-export default DetailFamilyScreen;
+export default DetailMemberScreen;

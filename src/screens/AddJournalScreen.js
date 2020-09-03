@@ -9,13 +9,24 @@ const AddJournalScreen =({ navigation }) => {
   return (
     <JournalForm
     buttonTitle="Simpan"
-    header="Tambah Journal"
     onSubmit={(title, content) => {
       add_journal({title, content}, () => navigation.navigate('Journal'));
     }}
     />
   );
 }
+
+AddJournalScreen.navigationOptions = ({ navigation }) => {
+  return {
+    title : 'Tambah Jurnal',
+    headerStyle: {
+      elevation: 0, // remove shadow on Android
+      shadowOpacity: 0, // remove shadow on iOS
+    }
+      
+    }
+   
+};
 
 const styles = StyleSheet.create({
   container: {

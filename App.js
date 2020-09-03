@@ -16,6 +16,7 @@ import EditMemberScreen from './src/screens/EditMemberScreen';
 import AddFirstMemberScreen from './src/screens/AddFirstMemberScreen';
 import DetailMemberScreen from './src/screens/DetailMemberScreen';
 import ProfileScreen from './src/screens/ProfileScreen';
+import ChangePasswordScreen from './src/screens/ChangePasswordScreen';
 import JournalScreen from './src/screens/JournalScreen';
 import AddJournalScreen from './src/screens/AddJournalScreen';
 import DetailJournalScreen from './src/screens/DetailJournalScreen';
@@ -32,7 +33,18 @@ const homeFlow =
       EditMember : EditMemberScreen,
       AddFirstMember : AddFirstMemberScreen,
       DetailMember : DetailMemberScreen
-    }),
+    },
+    {
+      defaultNavigationOptions: {
+        cardStyle: { backgroundColor: '#FFFFFF' },
+        backgroundColor:'white',
+        headerStyle: {
+          elevation: 0, // remove shadow on Android
+          shadowOpacity: 0, // remove shadow on iOS
+          backgroundColor: 'transparent'
+        },
+      },
+  }),
     navigationOptions: {
       tabBarLabel:() => {return null},
       tabBarIcon: ({ tintColor }) => (
@@ -48,11 +60,47 @@ const journalFlow =
       AddJournal : AddJournalScreen,
       EditJournal : EditJournalScreen,
       DetailJournal : DetailJournalScreen
-    }),
+    },
+    {
+      defaultNavigationOptions: {
+        cardStyle: { backgroundColor: '#FFFFFF' },
+        backgroundColor:'white',
+        headerStyle: {
+          elevation: 0, // remove shadow on Android
+          shadowOpacity: 0, // remove shadow on iOS
+          backgroundColor: 'transparent'
+        },
+      },
+  }),
     navigationOptions: {
       tabBarLabel:() => {return null},
       tabBarIcon: ({ tintColor }) => (
         <AntDesign name="book" color={ tintColor } size={30} />
+      )
+    }
+};
+
+const profileFlow = 
+  { 
+    screen : createStackNavigator({
+      Profile : ProfileScreen,
+      ChangePassword : ChangePasswordScreen,
+    },
+    {
+      defaultNavigationOptions: {
+        cardStyle: { backgroundColor: '#FFFFFF' },
+        backgroundColor:'white',
+        headerStyle: {
+          elevation: 0, // remove shadow on Android
+          shadowOpacity: 0, // remove shadow on iOS
+          backgroundColor: 'transparent'
+        },
+      },
+  }),
+    navigationOptions: {
+      tabBarLabel:() => {return null},
+      tabBarIcon: ({ tintColor }) => (
+        <AntDesign name="user" color={ tintColor } size={30} />
       )
     }
 };
@@ -74,15 +122,7 @@ const switchNavigator = createSwitchNavigator({
     }
     },
     journalFlow,
-    Profile: {
-      screen : ProfileScreen,
-      navigationOptions: {
-        tabBarLabel:() => {return null},
-        tabBarIcon: ({ tintColor }) => (
-          <AntDesign name="user" color={ tintColor } size={30} />
-        )
-    }
-  }
+    profileFlow
   },
   {
     tabBarOptions: {

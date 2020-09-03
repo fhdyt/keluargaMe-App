@@ -10,7 +10,6 @@ const EditJournalScreen =({ navigation }) => {
   return (
     <JournalForm
     buttonTitle="Edit"
-    header="Edit Anggota"
     initialValues={{ 
         title: item.title, 
         content: item.content,
@@ -21,6 +20,18 @@ const EditJournalScreen =({ navigation }) => {
     />
   );
 }
+
+EditJournalScreen.navigationOptions = ({ navigation }) => {
+  return {
+    title : 'Edit Jurnal',
+    headerStyle: {
+      elevation: 0, // remove shadow on Android
+      shadowOpacity: 0, // remove shadow on iOS
+    }
+      
+    }
+   
+};
 
 const styles = StyleSheet.create({
   container: {

@@ -38,7 +38,7 @@ const SearchScreen = ({navigation}) => {
                     return (
                         <List.Item
                             title={item.name}
-                            description={item._id}
+                            description={item.address}
                             onPress={() => navigation.navigate('DetailMember', { item })}
                         />
                     );

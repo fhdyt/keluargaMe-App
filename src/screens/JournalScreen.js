@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { StyleSheet, View, FlatList } from 'react-native';
-import { Button, Headline, List } from 'react-native-paper';
+import { Button, IconButton, List, Divider } from 'react-native-paper';
 import { SafeAreaView } from 'react-navigation';
 import { Context as JournalContext } from '../context/JournalContext';
 
@@ -14,11 +14,7 @@ const JournalScreen =({navigation}) => {
 
   return (
     <View style={styles.container}>
-        <SafeAreaView forceInset={{ top: 'always' }}>
-      <Headline>Jurnal Keluarga</Headline>
-      <Button icon="plus" mode="contained" color='#388e3c' onPress={() => navigation.navigate('AddJournal')}>
-        Tambah
-      </Button>
+      <Divider/>
       <FlatList
         showsVerticalScrollIndicator={false}
         data={state.journalData}
@@ -33,10 +29,29 @@ const JournalScreen =({navigation}) => {
         );
         }}
     />
-      </SafeAreaView>
     </View>
   );
 }
+
+JournalScreen.navigationOptions = ({ navigation }) => {
+  return {
+    title : 'Jurnal Keluarga',
+    headerStyle: {
+      elevation: 0, // remove shadow on Android
+      shadowOpacity: 0, // remove shadow on iOS
+    },
+    headerRight: () => (
+      <IconButton
+        icon="plus"
+        color="black"
+        size={25}
+        onPress={() => navigation.navigate('AddJournal')}
+      />
+    ),
+      
+    }
+   
+};
 
 const styles = StyleSheet.create({
   container: {

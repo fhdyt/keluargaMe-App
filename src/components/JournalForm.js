@@ -3,14 +3,13 @@ import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import { TextInput, Button, Headline, RadioButton, Switch, ToggleButton } from 'react-native-paper';
 
 
-const JournalForm =({ onSubmit, initialValues, buttonTitle, header }) => {
+const JournalForm =({ onSubmit, initialValues, buttonTitle }) => {
   const [title, setTitle] = useState(initialValues.title);
   const [content, setContent] = useState(initialValues.content);
   
   return (
     <ScrollView>
     <View style={styles.container}>
-      <Headline>{header}</Headline>
       <TextInput
         label="Judul"
         value={title}
