@@ -77,7 +77,7 @@ const DetailMemberScreen =({navigation}) => {
           padding:10,
           marginTop:5
           }} >
-            <Button color="#388e3c" icon="account-plus" style={styles.button} mode="contained" onPress={() => navigation.navigate('AddMember', {item})}>Tambah</Button>
+            <Button color="#388e3c" icon="account-plus" style={styles.button} mode="contained" onPress={() => navigation.navigate('AddMember', {item})}>Tambah Keluarga</Button>
       <FlatList
             showsVerticalScrollIndicator={false}
             data={members(item._id)}

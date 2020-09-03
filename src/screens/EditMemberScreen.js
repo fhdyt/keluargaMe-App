@@ -11,10 +11,10 @@ const EditMemberScreen =({ navigation }) => {
   const { edit_member } = useContext(MemberContext);
   console.log(item.tags[0])
   if(item.tags[0] === 'assistant'){
-    tags = true
+    var tags = true
   }
   else{
-    tags = false
+    var tags = false
   }
   return (
     <MemberForm
@@ -35,6 +35,17 @@ const EditMemberScreen =({ navigation }) => {
     />
   );
 }
+
+EditMemberScreen.navigationOptions = ({ navigation }) => {
+  return {
+    title : '',
+    headerStyle: {
+      elevation: 0, // remove shadow on Android
+      shadowOpacity: 0, // remove shadow on iOS
+    }      
+    }
+   
+};
 
 const styles = StyleSheet.create({
   container: {

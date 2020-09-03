@@ -109,6 +109,17 @@ const switchNavigator = createSwitchNavigator({
   ResolveAuth: ResolveAuthScreen,
   loginFlow: createStackNavigator({
     Signin: SignInScreen,
+  },
+  {
+    defaultNavigationOptions: {
+      cardStyle: { backgroundColor: '#FFFFFF' },
+      backgroundColor:'white',
+      headerStyle: {
+        elevation: 0, // remove shadow on Android
+        shadowOpacity: 0, // remove shadow on iOS
+        backgroundColor: 'transparent'
+      },
+    },
   }),
   mainFlow: createBottomTabNavigator({
     homeFlow,

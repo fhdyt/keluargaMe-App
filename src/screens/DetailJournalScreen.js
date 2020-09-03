@@ -28,9 +28,9 @@ const DetailJournalScreen =({navigation}) => {
   return (
     <View style={styles.container}>
       <Title>{item.title}</Title>
-      <Caption>{item.date}</Caption>
+      <Caption>{item.createDate}</Caption>
       <Paragraph style={{marginTop:20}}>{item.content}</Paragraph>
-      <Button style={{borderRadius:30}} color="#d50000" icon="trash-can" mode="contained" onPress={() => buttonAlert(item._id)}>Hapus</Button>
+      <Button style={{borderRadius:30, marginTop:30}} color="#d50000" icon="trash-can" mode="contained" onPress={() => buttonAlert(item._id)}>Hapus</Button>
     </View>
   );
 }

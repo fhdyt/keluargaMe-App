@@ -18,6 +18,17 @@ const AddMemberScreen =({ navigation }) => {
   );
 }
 
+AddMemberScreen.navigationOptions = ({ navigation }) => {
+  const item = navigation.state.params.item
+  return {
+    title : item.name,
+    headerStyle: {
+      elevation: 0, // remove shadow on Android
+      shadowOpacity: 0, // remove shadow on iOS
+    }      
+    }
+   
+};
 const styles = StyleSheet.create({
   container: {
     marginHorizontal:10,
