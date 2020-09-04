@@ -12,6 +12,8 @@ const DetailMemberScreen =({navigation}) => {
     const { state, deleteMember } = useContext(MemberContext)
 
     const item = navigation.state.params.item
+    const [loadingButton, setLoadingButton] = useState(false)
+    const [disabledButton, setDisabledButton] = useState(false)
 
     var members = _id => {
         return state.personData.filter(result => {
@@ -30,7 +32,7 @@ const DetailMemberScreen =({navigation}) => {
             onPress: () => console.log("Cancel Pressed"),
             style: "cancel"
             },
-            { text: "Hapus", onPress: () => {deleteMember(_id, () => {navigation.navigate('DetailMember')})} }
+            { text: "Hapus", onPress: () => {setLoadingButton(true); setDisabledButton(true); deleteMember(_id, () => {navigation.navigate('DetailMember')})} }
         ],
             { cancelable: false }
         );
@@ -41,7 +43,8 @@ const DetailMemberScreen =({navigation}) => {
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
     <View style={styles.container}>
-        <View style={{borderWidth:1, 
+        <View style={{
+          borderWidth:1, 
           borderColor:"grey", 
           borderRadius:15,
           padding:10,
@@ -68,7 +71,7 @@ const DetailMemberScreen =({navigation}) => {
           description={item.phone}
         />
         <Button icon="account-edit" color="#283593" style={[styles.button,{marginBottom:10}]} mode="contained" onPress={() => navigation.navigate('EditMember', {item})}>Edit</Button>
-        <Button icon="trash-can" color="#d50000" style={styles.button} mode="contained" onPress={() => buttonAlert(item._id)}>Hapus</Button>
+        <Button icon="trash-can" color="#d50000" style={styles.button} mode="contained" loading={loadingButton} disabled={disabledButton} onPress={() => buttonAlert(item._id)}>Hapus</Button>
       </View>
       <Divider />
       <View style={{borderWidth:1, 
@@ -134,9 +137,9 @@ DetailMemberScreen.navigationOptions = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    marginHorizontal:10,
+    marginHorizontal:20,
     backgroundColor: '#fff',
-    marginBottom:5
+    marginBottom:10
   },
   button: {
     borderRadius: 30

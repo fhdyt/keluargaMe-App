@@ -1,21 +1,42 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { StyleSheet, View, FlatList } from 'react-native';
+import { StyleSheet, View, FlatList, Dimensions, Text} from 'react-native';
 import { Button, IconButton, List, Divider } from 'react-native-paper';
 import { SafeAreaView } from 'react-navigation';
 import { Context as JournalContext } from '../context/JournalContext';
-
+import SkeletonContent from 'react-native-skeleton-content';
 const JournalScreen =({navigation}) => {
 
-  const { state, fetchJournal } = useContext(JournalContext);
+  const { state, fetchJournal, loading } = useContext(JournalContext);
  
   useEffect(() => {
     fetchJournal();
   }, []);
 
+  const { width, height } = Dimensions.get("window");
   return (
     <View style={styles.container}>
       <Divider/>
-      <FlatList
+      { state.loading ? (
+        <SkeletonContent
+            containerStyle={{flex: 1, alignItems: 'center', marginTop: 0}}
+            layout={[
+              { key: 'title', 
+                height : 20, 
+                width: width-30,
+                marginTop:14,
+                marginBottom:5
+              },
+              { key: 'content', 
+                height : 35, 
+                width: width-30,
+              }
+            ]}
+        >  
+        </SkeletonContent>
+      ):(
+        <>
+        
+        <FlatList
         showsVerticalScrollIndicator={false}
         data={state.journalData}
         keyExtractor={(journal) => journal._id}
@@ -29,6 +50,8 @@ const JournalScreen =({navigation}) => {
         );
         }}
     />
+    </>
+      )}
     </View>
   );
 }

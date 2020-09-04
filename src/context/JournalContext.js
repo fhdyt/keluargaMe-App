@@ -5,9 +5,7 @@ import { navigate } from '../navigationRef';
 const journalReducer = (state, action) => {
   switch (action.type) {
     case 'fetch_journal':
-      return {journalData:action.payload, errorBanner: false, loading:false};
-    case 'errorBanner':
-      return { ...state, errorBanner: action.payload, loading:false };
+      return {journalData:action.payload, loading:false};
     case 'deleteJournal':
       return {
         ...state,
@@ -39,10 +37,8 @@ const journalReducer = (state, action) => {
 const fetchJournal = dispatch => async () => {
   console.log("FetchingData")
   try{
-    //const info_response = await serverApi.get('/info');
     const response = await serverApi.get('/journal');
     dispatch({ type: 'fetch_journal', payload: response.data});    
-    console.log("Success FetchingData")
   } catch(err){
     dispatch({ type: 'errorBanner', payload: true });
     console.log(err)
@@ -91,20 +87,14 @@ const deleteJournal = dispatch => async (_id, callback) => {
     
 };
 
-const showLoading = dispatch => async () => {
-    dispatch({ type: 'show_loading', payload: true});
-};
-
 export const { Provider, Context } = createDataContext(
   journalReducer,
   { add_journal, 
     edit_journal, 
     fetchJournal, 
     deleteJournal,
-    showLoading
    },{
      journalData:[],
-     errorBanner:false,
      loading:true
    }
 );

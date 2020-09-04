@@ -6,8 +6,10 @@ import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { Provider as AuthProvider } from './src/context/AuthContext';
 import { Provider as MemberProvider } from './src/context/MemberContext';
 import { Provider as JournalProvider } from './src/context/JournalContext';
+import { IconButton } from 'react-native-paper';
 
 import SignInScreen from './src/screens/SignInScreen';
+import SignUpScreen from './src/screens/SignUpScreen';
 import ResolveAuthScreen from './src/screens/ResolveAuthScreen';
 import HomeScreen from './src/screens/HomeScreen';
 import SearchScreen from './src/screens/SearchScreen';
@@ -48,7 +50,7 @@ const homeFlow =
     navigationOptions: {
       tabBarLabel:() => {return null},
       tabBarIcon: ({ tintColor }) => (
-        <AntDesign name="home" color={ tintColor } size={30} />
+        <IconButton icon="home" color={ tintColor } size={30} />
       )
     }
 };
@@ -75,7 +77,7 @@ const journalFlow =
     navigationOptions: {
       tabBarLabel:() => {return null},
       tabBarIcon: ({ tintColor }) => (
-        <AntDesign name="book" color={ tintColor } size={30} />
+        <IconButton icon="book-open-page-variant" color={ tintColor } size={30} />
       )
     }
 };
@@ -100,7 +102,7 @@ const profileFlow =
     navigationOptions: {
       tabBarLabel:() => {return null},
       tabBarIcon: ({ tintColor }) => (
-        <AntDesign name="user" color={ tintColor } size={30} />
+        <IconButton icon="account" color={ tintColor } size={30} />
       )
     }
 };
@@ -109,6 +111,7 @@ const switchNavigator = createSwitchNavigator({
   ResolveAuth: ResolveAuthScreen,
   loginFlow: createStackNavigator({
     Signin: SignInScreen,
+    SignUp: SignUpScreen,
   },
   {
     defaultNavigationOptions: {
@@ -128,7 +131,7 @@ const switchNavigator = createSwitchNavigator({
       navigationOptions: {
         tabBarLabel:() => {return null},
         tabBarIcon: ({ tintColor }) => (
-          <AntDesign name="search1" color={ tintColor } size={30} />
+          <IconButton icon="magnify" color={ tintColor } size={30} />
         )
     }
     },

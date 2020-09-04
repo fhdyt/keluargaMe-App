@@ -59,8 +59,8 @@ SearchScreen.navigationOptions = ({ navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        marginBottom: 100,
-        marginHorizontal: 10
+        marginBottom: 10,
+        marginHorizontal: 20
       },
 
 });

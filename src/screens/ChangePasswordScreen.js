@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import { TextInput, Button, Headline, RadioButton, Switch, ToggleButton } from 'react-native-paper';
-
+import Spacer from '../components/Spacer';
 
 const ChangePasswordScreen =({ navigation }) => {
   const [oldpass, setOldpass] = useState('');
@@ -11,22 +11,29 @@ const ChangePasswordScreen =({ navigation }) => {
   return (
     <ScrollView>
     <View style={styles.container}>
+      <Spacer />
       <TextInput
         label="Password Lama"
+        mode="outlined"
         value={oldpass}
         onChangeText={oldpass => setOldpass(oldpass)}
     />
+    <Spacer />
     <TextInput
         label="Password Baru"
+        mode="outlined"
         value={newpass}
         onChangeText={newpass => setNewpass(newpass)}
     />
+    <Spacer />
     <TextInput
         label="Ulangi Password Baru"
+        mode="outlined"
         value={retypepass}
         onChangeText={retypepass => setRetypepass(retypepass)}
     />
-    <Button mode="contained" style={{borderRadius:30}}>Ganti Password</Button>
+    <Spacer />
+    <Button mode="contained" color="#388e3c" style={{borderRadius:30}}>Ganti Password</Button>
     </View>
     </ScrollView>
   );
@@ -45,7 +52,7 @@ ChangePasswordScreen.navigationOptions = ({ navigation }) => {
   };
 const styles = StyleSheet.create({
   container: {
-    marginHorizontal:10,
+    marginHorizontal:20,
     backgroundColor: '#fff',
   },
 });

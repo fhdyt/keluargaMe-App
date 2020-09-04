@@ -5,10 +5,12 @@ import { navigate } from '../navigationRef';
 
 const authReducer = (state, action) => {
   switch (action.type) {
-    case 'add_error':
-      return { ...state, errorMessage: action.payload };
+    case 'login_error':
+      return { ...state, loginError: action.payload, loading:false, };
     case 'signin':
-      return { errorMessage: '', token: action.payload };
+      return { loginError: false, token: action.payload };
+    case 'loading':
+      return { loading: action.payload, loginError:false };
     case 'clear_error_message':
       return { ...state, errorMessage: '' };
     case 'signout':
@@ -26,10 +28,6 @@ const tryLocalSignin = dispatch => async () => {
   } else {
     navigate('Signin');
   }
-};
-
-const clearErrorMessage = dispatch => () => {
-  dispatch({ type: 'clear_error_message' });
 };
 
 const signup = dispatch => async ({ email, password }) => {
@@ -54,9 +52,10 @@ const signin = dispatch => async ({ phone, password }) => {
     dispatch({ type: 'signin', payload: response.data.token });
     navigate('Home');
   } catch (err) {
+    console.log(err)
     dispatch({
-      type: 'add_error',
-      payload: 'Something went wrong with sign in'
+      type: 'login_error',
+      payload: true
     });
   }
 };
@@ -67,8 +66,13 @@ const signout = dispatch => async () => {
   navigate('loginFlow');
 };
 
+const loading = dispatch => async () => {
+  dispatch({ type: 'loading', payload:true });
+};
+
+
 export const { Provider, Context } = createDataContext(
   authReducer,
-  { signin, signout, signup, clearErrorMessage, tryLocalSignin },
-  { token: null, errorMessage: '' }
+  { signin, signout, signup, tryLocalSignin, loading },
+  { token: null, loginError:false, loading:false }
 );

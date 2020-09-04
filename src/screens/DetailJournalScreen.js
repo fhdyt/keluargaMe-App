@@ -7,6 +7,8 @@ const DetailJournalScreen =({navigation}) => {
     const { state, deleteJournal } = useContext(JournalContext)
 
     const item = navigation.state.params.item
+    const [loadingButton, setLoadingButton] = useState(false)
+    const [disabledButton, setDisabledButton] = useState(false)
 
       const buttonAlert = (_id) =>
     {
@@ -19,7 +21,7 @@ const DetailJournalScreen =({navigation}) => {
             onPress: () => console.log("Cancel Pressed"),
             style: "cancel"
             },
-            { text: "Hapus", onPress: () => {deleteJournal(_id, () => {navigation.navigate('Journal')})} }
+            { text: "Hapus", onPress: () => {setLoadingButton(true); setDisabledButton(true); deleteJournal(_id, () => {navigation.navigate('Journal')})} }
         ],
             { cancelable: false }
         );
@@ -30,7 +32,7 @@ const DetailJournalScreen =({navigation}) => {
       <Title>{item.title}</Title>
       <Caption>{item.createDate}</Caption>
       <Paragraph style={{marginTop:20}}>{item.content}</Paragraph>
-      <Button style={{borderRadius:30, marginTop:30}} color="#d50000" icon="trash-can" mode="contained" onPress={() => buttonAlert(item._id)}>Hapus</Button>
+      <Button style={{borderRadius:30, marginTop:30}} color="#d50000" icon="trash-can" mode="contained" loading={loadingButton} disabled={disabledButton} onPress={() => buttonAlert(item._id)}>Hapus</Button>
     </View>
   );
 }
@@ -57,8 +59,9 @@ DetailJournalScreen.navigationOptions = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    marginHorizontal:15,
+    marginHorizontal:20,
     backgroundColor: '#fff',
+    marginBottom:10,
   },
 });
 

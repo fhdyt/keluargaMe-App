@@ -5,20 +5,18 @@ import { navigate } from '../navigationRef';
 const memberReducer = (state, action) => {
   switch (action.type) {
     case 'fetch_family':
-      return {personData:action.payload, errorBanner: false, loading:false};
-    case 'errorBanner':
-      return { ...state, errorBanner: action.payload, loading:false };
+      return {personData:action.payload, loading:false};
+    case 'failedBanner':
+      return { ...state, failedBanner: action.payload, loading:false };
     case 'deleteMember':
       return {
         ...state,
         personData: state.personData.filter(
           personData => personData._id !== action.payload
-        ), errorBanner: false
+        )
       };
     case 'add_member':
-      return {...state, personData:[...state.personData ,action.payload], errorBanner: false};
-    case 'show_loading':
-      return {...state, loading:true, errorBanner:false};
+      return {...state, personData:[...state.personData ,action.payload]};
     case 'edit_member':
       const updatePerson = action.payload;
       const updatePersons = state.personData.map(person => {
@@ -29,7 +27,7 @@ const memberReducer = (state, action) => {
       });
         return {
           ...state,
-          personData: updatePersons , errorBanner: false
+          personData: updatePersons
         };
     default:
       return state;
@@ -37,15 +35,12 @@ const memberReducer = (state, action) => {
 };
 
 const fetchFamily = dispatch => async () => {
-  console.log("FetchingData")
   try{
-    //const info_response = await serverApi.get('/info');
     const response = await serverApi.get('/member');
-    dispatch({ type: 'fetch_family', payload: response.data});    
-    console.log("Success FetchingData")
+    dispatch({ type: 'fetch_family', payload: response.data}); 
   } catch(err){
-    dispatch({ type: 'errorBanner', payload: true });
     console.log(err)
+    dispatch({ type: 'failedBanner', payload: true });
   }
 };
 
@@ -58,13 +53,13 @@ const add_member = dispatch => async ({ pid, name, address, phone, birthdate, di
   }
   try {
     const response = await serverApi.post('/member', { pid, name, address, phone, birthdate, diedate, gender, tags });
+
     dispatch({ type: 'add_member', payload: response.data});
     if(callback){
       callback()
     }
   } catch (err) {
     navigate('Home')
-    console.log(err)
     dispatch({ type: 'errorBanner', payload: true });
   }
 };
@@ -79,9 +74,7 @@ const edit_member = dispatch => async ({ _id, pid, name, address, phone, birthda
     tags_server = ''
   }
   try {
-    console.log("Edit Member")
     const tags = [tagss]
-    console.log({ _id, pid, name, address, phone, birthdate, diedate, gender, tags_status})
     const response = await serverApi.put('/member', { _id, pid, name, address, phone, birthdate, diedate, gender, tags:tags_server });
     dispatch({ type: 'edit_member', payload: {_id, pid, name, address, phone, birthdate, diedate, gender, tags}});
     if(callback){
@@ -94,7 +87,6 @@ const edit_member = dispatch => async ({ _id, pid, name, address, phone, birthda
 };
 
 const deleteMember = dispatch => async (_id, callback) => {
-    console.log("Delete Member")
     try{
       const response = await serverApi.delete(`/member/${_id}`);
       dispatch({ type: 'deleteMember', payload: _id});
@@ -108,21 +100,16 @@ const deleteMember = dispatch => async (_id, callback) => {
     
 };
 
-const showLoading = dispatch => async () => {
-    dispatch({ type: 'show_loading', payload: true});
-};
-
 export const { Provider, Context } = createDataContext(
   memberReducer,
   { add_member, 
     edit_member, 
     fetchFamily, 
-    deleteMember,
-    showLoading
+    deleteMember
    },{
-     info:[{jumlah:0, pria:0, wanita:0, meninggal:0}],
      personData:[],
      errorBanner:false,
-     loading:true
+     loading:true,
+     failed:false
    }
 );
