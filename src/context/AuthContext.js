@@ -51,8 +51,8 @@ const signin = dispatch => async ({ phone, password }) => {
     await AsyncStorage.setItem('token', response.data.token);
     dispatch({ type: 'signin', payload: response.data.token });
     navigate('Home');
-  } catch (err) {
-    console.log(err)
+  } catch (error) {
+    console.log(error)
     dispatch({
       type: 'login_error',
       payload: true

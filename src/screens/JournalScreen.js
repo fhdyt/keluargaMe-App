@@ -17,6 +17,7 @@ const JournalScreen =({navigation}) => {
     <View style={styles.container}>
       <Divider/>
       { state.loading ? (
+        <>
         <SkeletonContent
             containerStyle={{flex: 1, alignItems: 'center', marginTop: 0}}
             layout={[
@@ -29,10 +30,31 @@ const JournalScreen =({navigation}) => {
               { key: 'content', 
                 height : 35, 
                 width: width-30,
+              },
+              { key: 'title2', 
+                height : 20, 
+                width: width-30,
+                marginTop:26,
+                marginBottom:5
+              },
+              { key: 'content2', 
+                height : 35, 
+                width: width-30,
+              },
+              { key: 'title23', 
+                height : 20, 
+                width: width-30,
+                marginTop:25,
+                marginBottom:5
+              },
+              { key: 'content23', 
+                height : 35, 
+                width: width-30,
               }
             ]}
         >  
         </SkeletonContent>
+        </>
       ):(
         <>
         

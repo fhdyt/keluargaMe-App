@@ -50,7 +50,8 @@ const SignInScreen =({navigation}) => {
     Masuk
   </Button>
   <Spacer />
-  <Subheading style={{alignSelf:'center'}} onPress={()=> navigation.navigate('SignUp')}>Cara mendapatkan akun</Subheading>
+  <Subheading style={{alignSelf:'center', color:"grey"}} onPress={()=> navigation.navigate('SignUp')}>Cara mendapatkan akun</Subheading>
+  <Caption style={{alignSelf:'center', fontSize:11}}>Versi. 20200904</Caption>
     </View>
     </>
   );

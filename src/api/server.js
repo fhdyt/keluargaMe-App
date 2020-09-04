@@ -3,8 +3,8 @@ import { AsyncStorage } from 'react-native';
 
 let url;
 if (__DEV__) {
-  url = 'http://f8592a338e0f.ngrok.io';
-  // url = 'https://limitless-temple-57596.herokuapp.com';
+  // url = 'http://64417883d299.ngrok.io';
+  url = 'https://limitless-temple-57596.herokuapp.com/';
 } else {
   url = '';
 }
