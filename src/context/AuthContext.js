@@ -6,7 +6,7 @@ import { navigate } from '../navigationRef';
 const authReducer = (state, action) => {
   switch (action.type) {
     case 'login_error':
-      return { ...state, loginError: action.payload, loading:false, };
+      return { ...state, loginError: action.payload, loading:false };
     case 'signin':
       return { loginError: false, token: action.payload };
     case 'loading':
@@ -27,21 +27,6 @@ const tryLocalSignin = dispatch => async () => {
     navigate('Home');
   } else {
     navigate('Signin');
-  }
-};
-
-const signup = dispatch => async ({ email, password }) => {
-  try {
-    const response = await serverApi.post('/signup', { email, password });
-    await AsyncStorage.setItem('token', response.data.token);
-    dispatch({ type: 'signin', payload: response.data.token });
-
-    navigate('Home');
-  } catch (err) {
-    dispatch({
-      type: 'add_error',
-      payload: 'Something went wrong with sign up'
-    });
   }
 };
 
@@ -73,6 +58,6 @@ const loading = dispatch => async () => {
 
 export const { Provider, Context } = createDataContext(
   authReducer,
-  { signin, signout, signup, tryLocalSignin, loading },
+  { signin, signout, tryLocalSignin, loading },
   { token: null, loginError:false, loading:false }
 );

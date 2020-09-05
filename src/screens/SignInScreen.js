@@ -19,7 +19,7 @@ const SignInScreen =({navigation}) => {
         style={{backgroundColor:'#d50000'}}
         visible={state.loginError}
         actions={[ ]}>
-        <Text style={{color:'white', fontSize:15}}>Proses masuk gagal dilakukan.</Text>
+        <Text style={{color:'white', fontSize:15}}>Gagal</Text>
       </Banner>
     <Spacer />
       <TextInput
