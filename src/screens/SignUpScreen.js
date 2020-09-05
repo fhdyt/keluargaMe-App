@@ -1,10 +1,23 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { StyleSheet, Text, View, Image, Linking } from 'react-native';
 import { TextInput, Button, Title, Caption, Paragraph } from 'react-native-paper';
-import { Context } from '../context/AuthContext';
+import { Context } from '../context/MemberContext';
 import Spacer from '../components/Spacer';
+import axios from 'axios';
+
 const SignUpScreen =({navigation}) => {
-  const { state, signin, clearErrorMessage } = useContext(Context);
+const { state, signin, clearErrorMessage, fetchFamily } = useContext(Context);
+
+  useEffect(() => {
+    axios.get('https://guarded-plains-47822.herokuapp.com/person')
+      .then(res => {
+        const categories = res.data;
+        console.log(categories);
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
+  }, []);
 
   return (
     <View style={styles.container}>
