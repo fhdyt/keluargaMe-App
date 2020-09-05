@@ -3,8 +3,8 @@ import { AsyncStorage } from 'react-native';
 
 let url;
 if (__DEV__) {
-  url = 'http://159.138.82.157:3000';
-  // url = 'https://limitless-temple-57596.herokuapp.com';
+  // url = 'http://159.138.82.157:3000';
+  url = 'https://limitless-temple-57596.herokuapp.com';
 } else {
   url = '';
 }
