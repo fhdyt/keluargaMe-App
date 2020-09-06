@@ -9,7 +9,11 @@ const SignUpScreen =({navigation}) => {
 const { state, signin, clearErrorMessage, fetchFamily } = useContext(Context);
 
   useEffect(() => {
-    axios.get('https://limitless-temple-57596.herokuapp.com/member-test', {
+    axios.get('http://limitless-temple-57596.herokuapp.com/member-test', {
+      headers:{  
+        "Content-Type": "application/json",
+        'Accept': 'application/json',
+      },
     })
       .then(res => {
         alert(res)
