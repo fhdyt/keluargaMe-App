@@ -10,7 +10,6 @@ import { IconButton } from 'react-native-paper';
 
 import SignInScreen from './src/screens/SignInScreen';
 import SignUpScreen from './src/screens/SignUpScreen';
-import WebInfoScreen from './src/screens/WebInfoScreen'
 import ResolveAuthScreen from './src/screens/ResolveAuthScreen';
 import HomeScreen from './src/screens/HomeScreen';
 import SearchScreen from './src/screens/SearchScreen';
@@ -110,8 +109,7 @@ const switchNavigator = createSwitchNavigator({
   ResolveAuth: ResolveAuthScreen,
   loginFlow: createStackNavigator({
     Signin: SignInScreen,
-    SignUp: SignUpScreen,
-    WebInfo: WebInfoScreen
+    SignUp: SignUpScreen
   },
   {
     defaultNavigationOptions: {

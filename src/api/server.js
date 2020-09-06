@@ -3,20 +3,24 @@ import { AsyncStorage } from 'react-native';
 
 let url;
 if (__DEV__) {
-  // url = 'http://159.138.82.157:3000';
-  url = 'https://limitless-temple-57596.herokuapp.com';
+  // url = 'http://d1ba58240a7d.ngrok.io';
+  url = 'https://limitless-temple-57596.herokuapp.com/';
 } else {
   url = '';
 }
 
 const instance = axios.create({
   baseURL: url,
+  headers: {
+    post: {
+      'Content-Type': 'application/json'
+    }
+  }
 });
 
 instance.interceptors.request.use(
   async (config) => {
     const token = await AsyncStorage.getItem('token');
-    config.headers.post['Content-Type'] = 'application/json';
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
