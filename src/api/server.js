@@ -4,7 +4,7 @@ import { AsyncStorage } from 'react-native';
 let url;
 if (__DEV__) {
   // url = 'http://d1ba58240a7d.ngrok.io';
-  url = 'https://limitless-temple-57596.herokuapp.com/';
+  url = 'https://limitless-temple-57596.herokuapp.com';
 } else {
   url = '';
 }
