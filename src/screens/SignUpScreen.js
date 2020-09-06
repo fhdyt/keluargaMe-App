@@ -9,13 +9,17 @@ const SignUpScreen =({navigation}) => {
 const { state, signin, clearErrorMessage, fetchFamily } = useContext(Context);
 
   useEffect(() => {
-    axios.get('https://guarded-plains-47822.herokuapp.com/person')
+    axios.get('https://guarded-plains-47822.herokuapp.com/person', {
+      headers: { 'content-type': 'application/json' }
+    })
       .then(res => {
+        alert(res)
         const categories = res.data;
-        console.log(categories);
+        console.log("Sukses");
       })
-      .catch(function (error) {
-        console.log(error)
+      .catch(function (response) {
+        console.log(response)
+        alert(response.message)
       })
   }, []);
 

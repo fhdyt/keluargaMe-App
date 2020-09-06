@@ -10,6 +10,7 @@ import { IconButton } from 'react-native-paper';
 
 import SignInScreen from './src/screens/SignInScreen';
 import SignUpScreen from './src/screens/SignUpScreen';
+import WebInfoScreen from './src/screens/WebInfoScreen'
 import ResolveAuthScreen from './src/screens/ResolveAuthScreen';
 import HomeScreen from './src/screens/HomeScreen';
 import SearchScreen from './src/screens/SearchScreen';
@@ -24,8 +25,6 @@ import AddJournalScreen from './src/screens/AddJournalScreen';
 import DetailJournalScreen from './src/screens/DetailJournalScreen';
 import EditJournalScreen from './src/screens/EditJournalScreen';
 import { setNavigator } from './src/navigationRef';
-
-import { AntDesign, FontAwesome } from '@expo/vector-icons';
 
 const homeFlow = 
   { 
@@ -112,6 +111,7 @@ const switchNavigator = createSwitchNavigator({
   loginFlow: createStackNavigator({
     Signin: SignInScreen,
     SignUp: SignUpScreen,
+    WebInfo: WebInfoScreen
   },
   {
     defaultNavigationOptions: {
