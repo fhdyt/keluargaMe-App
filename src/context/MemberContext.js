@@ -1,3 +1,4 @@
+import { AsyncStorage } from 'react-native';
 import createDataContext from './createDataContext';
 import serverApi from '../api/server';
 import { navigate } from '../navigationRef';
@@ -36,7 +37,14 @@ const memberReducer = (state, action) => {
 
 const fetchFamily = dispatch => async () => {
   try{
-    const response = await serverApi.get('/member');
+    const token = await AsyncStorage.getItem('token');
+    const response = await serverApi.get('/member', 
+    {
+        headers:{  
+          "Authorization": `Bearer ${token}`
+        },
+      }
+    );
     dispatch({ type: 'fetch_family', payload: response.data}); 
   } catch(err){
     console.log(err)
@@ -52,7 +60,13 @@ const add_member = dispatch => async ({ pid, name, address, phone, birthdate, di
     tags = ''
   }
   try {
-    const response = await serverApi.post('/member', { pid, name, address, phone, birthdate, diedate, gender, tags });
+    const token = await AsyncStorage.getItem('token');
+    const response = await serverApi.post('/member', { pid, name, address, phone, birthdate, diedate, gender, tags },
+    {
+      headers:{  
+        "Authorization": `Bearer ${token}`
+      },
+    });
 
     dispatch({ type: 'add_member', payload: response.data});
     if(callback){
@@ -75,7 +89,13 @@ const edit_member = dispatch => async ({ _id, pid, name, address, phone, birthda
   }
   try {
     const tags = [tagss]
-    const response = await serverApi.put('/member', { _id, pid, name, address, phone, birthdate, diedate, gender, tags:tags_server });
+    const token = await AsyncStorage.getItem('token');
+    const response = await serverApi.put('/member', { _id, pid, name, address, phone, birthdate, diedate, gender, tags:tags_server },
+    {
+      headers:{  
+        "Authorization": `Bearer ${token}`
+      },
+    });
     dispatch({ type: 'edit_member', payload: {_id, pid, name, address, phone, birthdate, diedate, gender, tags}});
     if(callback){
       callback()
@@ -88,7 +108,13 @@ const edit_member = dispatch => async ({ _id, pid, name, address, phone, birthda
 
 const deleteMember = dispatch => async (_id, callback) => {
     try{
-      const response = await serverApi.delete(`/member/${_id}`);
+      const token = await AsyncStorage.getItem('token');
+      const response = await serverApi.delete(`/member/${_id}`,
+      {
+        headers:{  
+          "Authorization": `Bearer ${token}`
+        },
+      });
       dispatch({ type: 'deleteMember', payload: _id});
       if(callback){
         callback()

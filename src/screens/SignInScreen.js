@@ -51,7 +51,7 @@ const SignInScreen =({navigation}) => {
   </Button>
   <Spacer />
   <Subheading style={{alignSelf:'center', color:"grey"}} onPress={()=> navigation.navigate('SignUp')}>Cara mendapatkan akun</Subheading>
-  <Caption style={{alignSelf:'center', fontSize:11}}>Versi. 7</Caption>
+  <Caption style={{alignSelf:'center', fontSize:11}}>Versi. 1.0.0</Caption>
     </View>
     </>
   );

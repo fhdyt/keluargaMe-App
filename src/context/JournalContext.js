@@ -1,3 +1,4 @@
+import { AsyncStorage } from 'react-native';
 import createDataContext from './createDataContext';
 import serverApi from '../api/server';
 import { navigate } from '../navigationRef';
@@ -37,7 +38,13 @@ const journalReducer = (state, action) => {
 const fetchJournal = dispatch => async () => {
   console.log("FetchingData")
   try{
-    const response = await serverApi.get('/journal');
+    const token = await AsyncStorage.getItem('token');
+    const response = await serverApi.get('/journal',
+    {
+        headers:{  
+          "Authorization": `Bearer ${token}`
+        },
+      });
     dispatch({ type: 'fetch_journal', payload: response.data});    
   } catch(err){
     dispatch({ type: 'errorBanner', payload: true });
@@ -47,7 +54,13 @@ const fetchJournal = dispatch => async () => {
 
 const add_journal = dispatch => async ({ title, content }, callback) => {
   try {
-    const response = await serverApi.post('/journal', { title, content });
+    const token = await AsyncStorage.getItem('token');
+    const response = await serverApi.post('/journal', { title, content },
+    {
+        headers:{  
+          "Authorization": `Bearer ${token}`
+        },
+      });
     dispatch({ type: 'add_journal', payload: response.data});
     if(callback){
       callback()
@@ -62,7 +75,13 @@ const add_journal = dispatch => async ({ title, content }, callback) => {
 const edit_journal = dispatch => async ({ _id, title, content}, callback) => {
   try {
     console.log({ _id, title, content})
-    const response = await serverApi.put('/journal', { _id, title, content });
+    const token = await AsyncStorage.getItem('token');
+    const response = await serverApi.put('/journal', { _id, title, content },
+    {
+        headers:{  
+          "Authorization": `Bearer ${token}`
+        },
+      });
     dispatch({ type: 'edit_journal', payload: {_id, title, content}});
     if(callback){
       callback()
@@ -75,7 +94,13 @@ const edit_journal = dispatch => async ({ _id, title, content}, callback) => {
 
 const deleteJournal = dispatch => async (_id, callback) => {
     try{
-      const response = await serverApi.delete(`/journal/${_id}`);
+      const token = await AsyncStorage.getItem('token');
+      const response = await serverApi.delete(`/journal/${_id}`,
+      {
+        headers:{  
+          "Authorization": `Bearer ${token}`
+        },
+      });
       dispatch({ type: 'deleteJournal', payload: _id});
       if(callback){
         callback()

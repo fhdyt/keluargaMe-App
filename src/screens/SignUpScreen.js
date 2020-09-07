@@ -6,25 +6,20 @@ import Spacer from '../components/Spacer';
 import axios from 'axios';
 
 const SignUpScreen =({navigation}) => {
-const { state, signin, clearErrorMessage, fetchFamily } = useContext(Context);
+//const { state, signin, clearErrorMessage, fetchFamily } = useContext(Context);
 
-  useEffect(() => {
-    axios.get('https://api-huawei.zte.my.id/member-test', {
-      headers:{  
-        "Content-Type": "application/json",
-        'Accept': 'application/json',
-      },
-    })
-      .then(res => {
-        alert(res)
-        const categories = res.data;
-        console.log("Sukses");
-      })
-      .catch(function (response) {
-        console.log(response)
-        alert(response.message)
-      })
-  }, []);
+  // useEffect(() => {
+  //   axios.post('https://api-huawei.zte.my.id/signin', { phone:'12', password:'123' })
+  //     .then(res => {
+  //       alert(res)
+  //       const categories = res.data;
+  //       console.log("Sukses");
+  //     })
+  //     .catch(function (response) {
+  //       console.log(response)
+  //       alert(response.message)
+  //     })
+  // }, []);
 
   return (
     <View style={styles.container}>
