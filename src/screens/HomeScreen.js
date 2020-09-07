@@ -1,13 +1,18 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { StyleSheet, FlatList, View, Text, Dimensions } from 'react-native';
-import { IconButton, Button, List, Divider, Subheading, Banner, Title } from 'react-native-paper';
+import { IconButton, Button, List, Divider, Subheading, Snackbar} from 'react-native-paper';
 import { Context as MemberContext } from '../context/MemberContext';
-import { SafeAreaView } from 'react-navigation';
+import { ScrollView } from 'react-native-gesture-handler';
 import SkeletonContent from 'react-native-skeleton-content';
 import Spacer from '../components/Spacer';
+import { YellowBox } from 'react-native'
+
 
 const HomeScreen =({navigation}) => {
-  const { state, fetchFamily, loading, failedBanner } = useContext(MemberContext);
+  YellowBox.ignoreWarnings([
+    'VirtualizedLists should never be nested',
+  ])
+  const { state, fetchFamily, loading, failedActionClose, refreshing } = useContext(MemberContext);
  
   useEffect(() => {
     fetchFamily();
@@ -32,29 +37,82 @@ const HomeScreen =({navigation}) => {
   };
   const { width, height } = Dimensions.get("window");
   return (
+    <>
     <View style={styles.container}>
-      <Divider/>
       {
         state.failedBanner ? (
           <View style={{backgroundColor:'#d50000', borderRadius:10, height:100, alignItems:'center', justifyContent:'center', padding:10}}>
-            <Title style={{color:'white'}}>Periksa koneksi internet anda.</Title>
-            </View>):
+            <Subheading style={{color:'white'}}>Gagal mengambil data.</Subheading>
+            <Text style={{color:'white'}}>Periksa koneksi internet anda.</Text>
+          </View>):
         (
           <>
           {
               state.loading ? (
-                <SkeletonContent
-                        containerStyle={{flex: 1, alignItems: 'center', marginTop: 15}}
+                <>
+                  <SkeletonContent
+                        container Style={{flex: 1, alignItems: 'center', marginTop: 15}}
                         layout={[
-                          { key: 'positif', 
-                            height : 355, 
-                            width: width-50,
-                            borderRadius:15, 
+                          { key: 'nama', 
+                            height : 30, 
+                            width: width-80,
+                            borderRadius:5,
+                            marginTop:25, 
+                            marginVertical: 10 
+                          },
+                          { key: 'alamat', 
+                            height : 15, 
+                            width: width-80,
+                            borderRadius:5,
+                            marginTop:0, 
+                            marginVertical: 10 
+                          },
+                          { key: 'title_keluarga', 
+                            height : 20, 
+                            width: width-80,
+                            borderRadius:5,
+                            marginTop:20, 
+                            marginVertical: 10 
+                          },
+                          { key: 'jumlah_keluarga', 
+                            height : 15, 
+                            width: width-80,
+                            borderRadius:5,
+                            marginTop:-8, 
+                            marginVertical: 10 
+                          },
+                          { key: 'title_pria', 
+                            height : 20, 
+                            width: width-80,
+                            borderRadius:5,
+                            marginTop:20, 
+                            marginVertical: 10 
+                          },
+                          { key: 'jumlah_pria', 
+                            height : 15, 
+                            width: width-80,
+                            borderRadius:5,
+                            marginTop:-8, 
+                            marginVertical: 10 
+                          },
+                          { key: 'title_wanita', 
+                            height : 20, 
+                            width: width-80,
+                            borderRadius:5,
+                            marginTop:20, 
+                            marginVertical: 10 
+                          },
+                          { key: 'jumlah_wanita', 
+                            height : 15, 
+                            width: width-80,
+                            borderRadius:5,
+                            marginTop:-8, 
                             marginVertical: 10 
                           }
                         ]}
                     >  
-                    </SkeletonContent>
+                  </SkeletonContent>
+                </>
               ) :
               (
                 <>
@@ -66,18 +124,17 @@ const HomeScreen =({navigation}) => {
                     <Button icon="plus" style={{borderRadius:30}} mode="contained" color='#388e3c' onPress={() => navigation.navigate('AddFirstMember')}>Tambah Anggota Pertama</Button>
                   </View>
                 ):(
+                  <>
+                   <ScrollView showsVerticalScrollIndicator={false}>                   
                   <FlatList
                       showsVerticalScrollIndicator={false}
                       data={filter()}
                       keyExtractor={(member) => member._id}
+                      onRefresh={() => {fetchFamily();refreshing()}}
+                      refreshing={state.loading}
                       renderItem={({ item }) => {
                       return (
-                        <View style={{borderWidth:1, 
-                          borderColor:"grey", 
-                          borderRadius:15,
-                          padding:10,
-                          marginVertical:10
-                          }} >
+                        <View style={styles.data} >
                             <List.Item
                               title={item.name}
                               titleStyle={{fontSize:30, fontWeight:'bold'}}
@@ -103,6 +160,8 @@ const HomeScreen =({navigation}) => {
                       );
                       }}
                   />
+                  </ScrollView>
+                  </>
                 )}
                 </>       
               )
@@ -110,7 +169,19 @@ const HomeScreen =({navigation}) => {
           </>
         )
       }
+      <Snackbar
+        visible={state.failedAction}
+        onDismiss={failedActionClose}
+        action={{
+          label: 'Tutup',
+          onPress: () => {
+            failedActionClose()
+          },
+        }}>
+        Gagal memproses.
+      </Snackbar>
     </View>
+    </>
   );
 }
 
@@ -139,7 +210,15 @@ const styles = StyleSheet.create({
     marginHorizontal:20,
     backgroundColor: '#fff',
     marginBottom:10,
+    flex: 1,
+    justifyContent: 'space-around',
   },
+  data: {
+   borderColor:"grey", 
+    borderRadius:15,
+    padding:10,
+    marginVertical:10
+  }
 });
 
 export default HomeScreen;

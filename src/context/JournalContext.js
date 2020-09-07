@@ -6,7 +6,9 @@ import { navigate } from '../navigationRef';
 const journalReducer = (state, action) => {
   switch (action.type) {
     case 'fetch_journal':
-      return {journalData:action.payload, loading:false};
+      return { journalData:action.payload, loading:false };
+    case 'refresh':
+      return { loading:action.payload };
     case 'deleteJournal':
       return {
         ...state,
@@ -47,8 +49,7 @@ const fetchJournal = dispatch => async () => {
       });
     dispatch({ type: 'fetch_journal', payload: response.data});    
   } catch(err){
-    dispatch({ type: 'errorBanner', payload: true });
-    console.log(err)
+    navigate('Home')
   }
 };
 
@@ -66,9 +67,7 @@ const add_journal = dispatch => async ({ title, content }, callback) => {
       callback()
     }
   } catch (err) {
-    navigate('Journal')
-    console.log(err)
-    dispatch({ type: 'errorBanner', payload: true });
+    navigate('Home')
   }
 };
 
@@ -88,7 +87,6 @@ const edit_journal = dispatch => async ({ _id, title, content}, callback) => {
     }
   } catch (err) {
     navigate('Home')
-    dispatch({ type: 'errorBanner', payload: true });
   }
 };
 
@@ -107,10 +105,14 @@ const deleteJournal = dispatch => async (_id, callback) => {
       }
     } catch(err){
       navigate('Home')
-      dispatch({ type: 'errorBanner', payload: true });
+
     }
     
 };
+
+const refreshing = dispatch => async (_id, callback) => {
+  dispatch({ type: 'refresh', payload: true});
+}
 
 export const { Provider, Context } = createDataContext(
   journalReducer,
@@ -118,8 +120,9 @@ export const { Provider, Context } = createDataContext(
     edit_journal, 
     fetchJournal, 
     deleteJournal,
+    refreshing
    },{
      journalData:[],
-     loading:true
+     loading:true,
    }
 );

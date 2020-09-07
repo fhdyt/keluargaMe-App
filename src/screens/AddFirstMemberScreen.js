@@ -17,11 +17,23 @@ const AddFirstMemberScreen =() => {
   );
 }
 
+AddFirstMemberScreen.navigationOptions = ({ navigation }) => {
+  return {
+    title : 'Keluarga Pertama',
+    headerStyle: {
+      elevation: 0, // remove shadow on Android
+      shadowOpacity: 0, // remove shadow on iOS
+    }      
+    }
+   
+};
+
 const styles = StyleSheet.create({
   container: {
     marginHorizontal:10,
     backgroundColor: '#fff',
   },
 });
+
 
 export default AddFirstMemberScreen;

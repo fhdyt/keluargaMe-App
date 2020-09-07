@@ -27,7 +27,7 @@ const SignUpScreen =({navigation}) => {
       <Title style={{alignSelf:'center', fontSize:30, fontWeight:'bold', color:"#388e3c"}}>KeluargaMe</Title>
       <Caption style={{alignSelf:'center'}}>www.keluarga.me</Caption>
       <Spacer />
-      <Paragraph style={{textAlign: 'center'}}>KeluargaMe adalah aplikasi pendata keluarga besar anda mulai dari keturunan pertama hingga keturunan berikutnya. Anda juga dapat melihat silsilah keluarga anda dalam bentuk 'Pohon Keluarga'</Paragraph>
+      <Paragraph style={{textAlign: 'center'}}>KeluargaMe adalah aplikasi pendata keluarga besar anda mulai dari keturunan pertama hingga keturunan berikutnya. Anda juga dapat melihat silsilah keluarga dalam bentuk 'Pohon Keluarga', dan cerita perjalanan keluarga ada pada 'Jurnal Keluarga'</Paragraph>
       <Spacer />
     
     <Spacer />

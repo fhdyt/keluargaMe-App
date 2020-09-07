@@ -7,8 +7,12 @@ const memberReducer = (state, action) => {
   switch (action.type) {
     case 'fetch_family':
       return {personData:action.payload, loading:false};
+    case 'refresh':
+      return { loading:action.payload };
     case 'failedBanner':
       return { ...state, failedBanner: action.payload, loading:false };
+    case 'failed_action':
+      return { ...state, failedAction: action.payload, loading:false };
     case 'deleteMember':
       return {
         ...state,
@@ -49,6 +53,7 @@ const fetchFamily = dispatch => async () => {
   } catch(err){
     console.log(err)
     dispatch({ type: 'failedBanner', payload: true });
+    dispatch({ type: 'failed_action', payload: true });
   }
 };
 
@@ -67,14 +72,13 @@ const add_member = dispatch => async ({ pid, name, address, phone, birthdate, di
         "Authorization": `Bearer ${token}`
       },
     });
-
     dispatch({ type: 'add_member', payload: response.data});
     if(callback){
       callback()
     }
   } catch (err) {
     navigate('Home')
-    dispatch({ type: 'errorBanner', payload: true });
+    //dispatch({ type: 'failed_action', payload: true });
   }
 };
 
@@ -102,7 +106,7 @@ const edit_member = dispatch => async ({ _id, pid, name, address, phone, birthda
     }
   } catch (err) {
     navigate('Home')
-    dispatch({ type: 'errorBanner', payload: true });
+    dispatch({ type: 'failed_action', payload: true });
   }
 };
 
@@ -121,21 +125,31 @@ const deleteMember = dispatch => async (_id, callback) => {
       }
     } catch(err){
       navigate('Home')
-      dispatch({ type: 'errorBanner', payload: true });
+      dispatch({ type: 'failed_action', payload: true });
     }
     
 };
+
+const failedActionClose = dispatch => async () => {
+    dispatch({ type: 'failed_action', payload: false });
+};
+
+const refreshing = dispatch => async (_id, callback) => {
+  dispatch({ type: 'refresh', payload: true});
+}
 
 export const { Provider, Context } = createDataContext(
   memberReducer,
   { add_member, 
     edit_member, 
     fetchFamily, 
-    deleteMember
+    deleteMember,
+    failedActionClose,
+    refreshing
    },{
      personData:[],
      errorBanner:false,
      loading:true,
-     failed:false
+     failedAction:false
    }
 );

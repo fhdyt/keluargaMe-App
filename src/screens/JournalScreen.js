@@ -1,12 +1,12 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { StyleSheet, View, FlatList, Dimensions, Text} from 'react-native';
-import { Button, IconButton, List, Divider } from 'react-native-paper';
+import { Button, IconButton, List, Divider, Caption } from 'react-native-paper';
 import { SafeAreaView } from 'react-navigation';
 import { Context as JournalContext } from '../context/JournalContext';
 import SkeletonContent from 'react-native-skeleton-content';
 const JournalScreen =({navigation}) => {
 
-  const { state, fetchJournal, loading } = useContext(JournalContext);
+  const { state, fetchJournal, loading, refreshing } = useContext(JournalContext);
  
   useEffect(() => {
     fetchJournal();
@@ -15,7 +15,7 @@ const JournalScreen =({navigation}) => {
   const { width, height } = Dimensions.get("window");
   return (
     <View style={styles.container}>
-      <Divider/>
+      <Divider />
       { state.loading ? (
         <>
         <SkeletonContent
@@ -57,15 +57,17 @@ const JournalScreen =({navigation}) => {
         </>
       ):(
         <>
-        
         <FlatList
         showsVerticalScrollIndicator={false}
         data={state.journalData}
         keyExtractor={(journal) => journal._id}
+        onRefresh={() => {fetchJournal();refreshing()}}
+        refreshing={state.loading}
         renderItem={({ item }) => {
         return (
           <List.Item
             title={item.title}
+            titleStyle={{fontWeight:'bold'}}
             description={item.content}
             onPress={() => navigation.navigate('DetailJournal', { item })}
           />
@@ -100,7 +102,7 @@ JournalScreen.navigationOptions = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    marginHorizontal:10,
+    marginHorizontal:20,
     backgroundColor: '#fff',
   },
 });
